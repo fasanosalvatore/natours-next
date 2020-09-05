@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
-import { publicFetch } from '../../utils/publicFetch';
 import Head from 'next/head';
+import { publicFetch } from '../../utils/publicFetch';
 
 const OverviewBox = ({ label, text, icon }) => (
 	<div className="overview-box__detail">
