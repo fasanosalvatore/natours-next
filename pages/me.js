@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 
+import { publicFetch } from '../utils/publicFetch';
 import { useAuth } from '../context/auth-context';
+import axios from 'axios';
 
 const NavItem = ({ link, text, icon, active }) => (
 	<li className={`${active ? 'side-nav--active' : ''}`}>
@@ -16,8 +18,11 @@ const NavItem = ({ link, text, icon, active }) => (
 	</li>
 );
 
-const Account = () => {
-	const user = useAuth((state) => state.user);
+const Account = ({ user }) => {
+	// const user = useAuth((state) => state.user);
+
+	// publicFetch('/users/me').then(console.log).catch(console.log);
+	// console.log(user);
 	const { register, handleSubmit } = useForm();
 	if (!user) return <h1>Error Unhautorized</h1>;
 	return (
@@ -137,6 +142,16 @@ const Account = () => {
 			</div>
 		</main>
 	);
+};
+
+Account.getInitialProps = async ({ req }) => {
+	console.log(req);
+	const res = await axios(
+		'https://intense-bastion-46247.herokuapp.com/api/v1/users/me',
+	);
+	console.log(res);
+
+	return {};
 };
 
 export default Account;

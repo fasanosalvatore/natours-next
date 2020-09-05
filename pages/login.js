@@ -1,20 +1,21 @@
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 
 import { useAuth } from '../context/auth-context';
 import { publicFetch } from '../utils/publicFetch';
+import axios from 'axios';
 
 const Login = () => {
-	const router = useRouter();
+	// const router = useRouter();
 	const { register, handleSubmit } = useForm();
 	const setUser = useAuth((state) => state.setUser);
 	const onSubmit = async (data) => {
-		const user = await publicFetch('/users/login', {
-			method: 'POST',
+		const user = await axios.post(
+			'https://intense-bastion-46247.herokuapp.com/api/v1/users/login',
 			data,
-		});
+		);
 		setUser(user.data.data.user);
-		router.push('/me');
+		Router.push('/me');
 	};
 
 	return (
