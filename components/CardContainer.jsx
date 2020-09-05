@@ -1,22 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
-import Card from './Card';
 
-const StyledCardContainer = styled.div`
-	max-width: 120rem;
-	margin: 0 auto;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-gap: 7rem;
-`;
+import Card from './Card';
 
 const CardContainer = React.memo(({ tours }) => {
 	return (
-		<StyledCardContainer>
+		<div className="card-container">
 			{tours.map((tour) => (
 				<Card key={tour._id} tour={tour} />
 			))}
-		</StyledCardContainer>
+		</div>
 	);
 });
 
