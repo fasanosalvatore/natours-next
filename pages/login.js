@@ -11,10 +11,13 @@ const Login = () => {
 	const setUser = useAuth((state) => state.setUser);
 	const onSubmit = async (data) => {
 		const user = await axios.post(
-			'https://intense-bastion-46247.herokuapp.com/api/v1/users/login',
+			'http://localhost:3001/api/v1/users/login',
 			data,
+			{
+				withCredentials: true,
+			},
 		);
-		setUser(user.data.data.user);
+		//setUser(user.data.data.user);
 		Router.push('/me');
 	};
 

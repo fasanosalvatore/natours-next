@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { publicFetch } from '../utils/publicFetch';
 import { useAuth } from '../context/auth-context';
 import axios from 'axios';
+import cookieCutter from 'cookie-cutter';
+import Cookies from 'cookies';
 
 const NavItem = ({ link, text, icon, active }) => (
 	<li className={`${active ? 'side-nav--active' : ''}`}>
@@ -21,8 +23,6 @@ const NavItem = ({ link, text, icon, active }) => (
 const Account = ({ user }) => {
 	// const user = useAuth((state) => state.user);
 
-	// publicFetch('/users/me').then(console.log).catch(console.log);
-	// console.log(user);
 	const { register, handleSubmit } = useForm();
 	if (!user) return <h1>Error Unhautorized</h1>;
 	return (
@@ -145,13 +145,23 @@ const Account = ({ user }) => {
 };
 
 Account.getInitialProps = async ({ req }) => {
-	console.log(req);
-	const res = await axios(
-		'https://intense-bastion-46247.herokuapp.com/api/v1/users/me',
-	);
-	console.log(res);
+	let res;
+	if (!!req) {
+		//SERVER
+		res = await axios(
+			'https://intense-bastion-46247.herokuapp.com/api/v1/users/me',
+			{
+				headers: req.headers,
+			},
+		);
+	}
+	if (!req) {
+		res = await axios(
+			'https://intense-bastion-46247.herokuapp.com/api/v1/users/me',
+		);
+	}
 
-	return {};
+	return { user: res.data.data.data };
 };
 
 export default Account;
