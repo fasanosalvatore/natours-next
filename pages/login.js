@@ -11,7 +11,7 @@ const Login = () => {
 	const setUser = useAuth((state) => state.setUser);
 	const onSubmit = async (data) => {
 		const user = await axios.post(
-			'http://localhost:3001/api/v1/users/login',
+			'https://intense-bastion-46247.herokuapp.com/api/v1/users/login',
 			data,
 			{
 				withCredentials: true,
